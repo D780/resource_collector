@@ -131,12 +131,12 @@ def search():
         print(f'Error: {e}')
         results_html = f'<p class="error">搜索出错: {e}</p>'
     
-    return f'''
+    return '''
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
-      <title>搜索结果: {keyword} - 动漫资源收集器</title>
+      <title>搜索结果: ''' + keyword + ''' - 动漫资源收集器</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -212,15 +212,15 @@ def search():
     </head>
     <body>
       <div class="container">
-        <h1>🔍 搜索结果: {keyword}</h1>
+        <h1>🔍 搜索结果: ''' + keyword + '''</h1>
         <form action="/search" method="GET">
           <div class="search-box">
-            <input type="text" name="keyword" placeholder="输入动漫名称搜索..." value="{keyword}" required>
+            <input type="text" name="keyword" placeholder="输入动漫名称搜索..." value="''' + keyword + '''" required>
             <button type="submit">重新搜索</button>
           </div>
         </form>
         <div class="results">
-          {results_html}
+          ''' + results_html + '''
         </div>
       </div>
     </body>
@@ -289,7 +289,7 @@ def detail():
         print(f'Error: {e}')
         magnets_html = f'<p class="error">获取详情出错: {e}</p>'
     
-    return f'''
+    return '''
     <!DOCTYPE html>
     <html>
     <head>
@@ -355,10 +355,10 @@ def detail():
     <body>
       <div class="container">
         <h1>📄 详情页</h1>
-        <p class="source-url">来源: <a href="{detail_url}" target="_blank">{detail_url}</a></p>
-        <h2>找到 {len(magnets)} 个磁力链接</h2>
+        <p class="source-url">来源: <a href="''' + detail_url + '''" target="_blank">''' + detail_url + '''</a></p>
+        <h2>找到 ''' + str(len(magnets)) + ''' 个磁力链接</h2>
         <div class="magnets">
-          {magnets_html}
+          ''' + magnets_html + '''
         </div>
         <p><a href="/">返回首页</a></p>
       </div>
