@@ -1,0 +1,26 @@
+{
+  "name": "anime-resource-collector",
+  "version": "2.0.0",
+  "description": "🎬 动漫番剧、电影、电视剧信息收集工具",
+  "main": "index.js",
+  "bin": {
+    "resource-collector": "./cli.js",
+    "rc": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js",
+    "anime": "node cli.js anime",
+    "interactive": "node cli.js interactive",
+    "test": "node test.js"
+  },
+  "keywords": ["anime", "crawler", "magnet", "download", "tmdb", "tvdb"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.14.0",
+    "cheerio": "^1.2.0",
+    "commander": "^14.0.3",
+    "dotenv": "^17.4.0"
+  }
+}
