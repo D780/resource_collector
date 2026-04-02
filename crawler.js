@@ -45,7 +45,22 @@ class Crawler {
       return response.data;
     } catch (error) {
       logger.error('Search failed', { keyword, error: error.message });
-      throw error;
+      // 返回一个模拟的搜索结果，以便前端能够正常显示
+      return `
+      <html>
+        <body>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>
+                  <a href="#">搜索失败 - 网络错误</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </body>
+      </html>
+      `;
     }
   }
 
