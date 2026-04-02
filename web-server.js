@@ -1,5 +1,4 @@
 const http = require('http');
-const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const Crawler = require('./crawler');
@@ -488,8 +487,8 @@ function getHomePage() {
 }
 
 async function handleRequest(req, res) {
-  const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const pathname = url.pathname;
 
   if (pathname.startsWith('/public/')) {
     const filePath = path.join(__dirname, pathname);
@@ -501,7 +500,7 @@ async function handleRequest(req, res) {
     if (pathname === '/') {
       sendHtmlResponse(res, getHomePage());
     } else if (pathname === '/search' && req.method === 'GET') {
-      const keyword = parsedUrl.query.keyword;
+      const keyword = url.searchParams.get('keyword');
       if (!keyword) {
         sendHtmlResponse(res, getSearchPage());
         return;
@@ -510,7 +509,7 @@ async function handleRequest(req, res) {
       const searchResults = parser.parseSearchResults(searchHtml);
       sendHtmlResponse(res, getSearchResultsPage(keyword, searchResults));
     } else if (pathname === '/detail' && req.method === 'GET') {
-      const detailUrl = parsedUrl.query.url;
+      const detailUrl = url.searchParams.get('url');
       if (!detailUrl) {
         sendJsonResponse(res, { error: 'Missing url parameter' }, 400);
         return;

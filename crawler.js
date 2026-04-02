@@ -9,9 +9,14 @@ class Crawler {
     this.config = config;
     this.cookies = null;
     this.axiosInstance = axios.create({
-      timeout: 10000,
+      timeout: 15000,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1'
       }
     });
   }
@@ -23,8 +28,8 @@ class Crawler {
       this.cookies = response.headers['set-cookie'];
       logger.info('Crawler initialized successfully');
     } catch (error) {
-      logger.error('Failed to initialize crawler', { error: error.message });
-      throw error;
+      logger.warn('Crawler initialization failed, will continue without cookies', { error: error.message });
+      // 不抛出错误，允许服务器继续运行
     }
   }
 
