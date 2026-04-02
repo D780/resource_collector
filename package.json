@@ -11,7 +11,8 @@
     "start": "node cli.js",
     "anime": "node cli.js anime",
     "interactive": "node cli.js interactive",
-    "test": "node test.js"
+    "test": "node test.js",
+    "web": "node web-server.js"
   },
   "keywords": ["anime", "crawler", "magnet", "download", "tmdb", "tvdb"],
   "author": "",
