@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= anime.title %> - 动漫剧集信息工具</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>动漫剧集信息工具</h1>
+    <p>从 kisssub 蜜柑计划等站点获取番剧信息和下载链接</p>
+  </header>
+  
+  <main>
+    <h2><%= anime.title %></h2>
+    <div class="anime-info">
+      <p>站点: <%= anime.site === 'kisssub' ? 'KissSub' : '蜜柑计划' %></p>
+      <p>状态: <%= anime.status %></p>
+      <p>最新集数: <%= anime.latestEpisode %></p>
+      <p>更新时间: <%= new Date(anime.updateTime).toLocaleString() %></p>
+      <p>原始链接: <a href="<%= anime.url %>" target="_blank">查看</a></p>
+    </div>
+    
+    <h3>剧集列表</h3>
+    <div class="episode-list">
+      <% if (episodes.length === 0) { %>
+        <p>暂无剧集数据</p>
+      <% } else { %>
+        <% episodes.forEach(episode => { %>
+          <div class="episode-item">
+            <h4>第 <%= episode.episodeNumber %> 话</h4>
+            <p><%= episode.title %></p>
+            <a href="<%= episode.magnetLink %>" class="magnet-link" target="_blank">磁力链接</a>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+    
+    <a href="/" class="back-link">返回番剧列表</a>
+  </main>
+  
+  <footer>
+    <p>© 2026 动漫剧集信息工具</p>
+  </footer>
+</body>
+</html>

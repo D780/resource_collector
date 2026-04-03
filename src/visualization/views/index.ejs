@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动漫剧集信息工具</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>动漫剧集信息工具</h1>
+    <p>从 kisssub 蜜柑计划等站点获取番剧信息和下载链接</p>
+  </header>
+  
+  <main>
+    <h2>番剧列表</h2>
+    <div class="anime-grid">
+      <% if (animeList.length === 0) { %>
+        <p>暂无番剧数据，请先运行数据更新</p>
+      <% } else { %>
+        <% animeList.forEach(anime => { %>
+          <div class="anime-card">
+            <h3><a href="/anime/<%= anime.id %>"><%= anime.title %></a></h3>
+            <p>站点: <%= anime.site === 'kisssub' ? 'KissSub' : '蜜柑计划' %></p>
+            <p>状态: <%= anime.status %></p>
+            <p>最新集数: <%= anime.latestEpisode %></p>
+            <p>更新时间: <%= new Date(anime.updateTime).toLocaleString() %></p>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+  </main>
+  
+  <footer>
+    <p>© 2026 动漫剧集信息工具</p>
+  </footer>
+</body>
+</html>
