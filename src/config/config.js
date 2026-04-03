@@ -22,7 +22,10 @@ module.exports = {
   // 数据获取配置
   scraper: {
     interval: 3600000, // 1小时
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    retryCount: 3, // 重试次数
+    retryDelay: 1000, // 重试延迟（毫秒）
+    proxy: null // 代理服务器配置，格式: 'http://username:password@host:port'
   },
   
   // 可视化配置

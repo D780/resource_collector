@@ -9,18 +9,52 @@ class BaseScraper {
     this.baseUrl = siteConfig.baseUrl;
   }
 
-  // 获取页面内容
+  // 延迟函数
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // 获取页面内容（带重试机制）
   async fetchPage(url) {
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          'User-Agent': config.scraper.userAgent
+    let retries = config.scraper.retryCount;
+    
+    while (retries > 0) {
+      try {
+        const configOptions = {
+          headers: {
+            'User-Agent': config.scraper.userAgent,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1'
+          },
+          httpsAgent: new (require('https').Agent)({
+            rejectUnauthorized: false
+          }),
+          timeout: 15000,
+          maxRedirects: 5
+        };
+
+        // 添加代理配置
+        if (config.scraper.proxy) {
+          configOptions.proxy = config.scraper.proxy;
         }
-      });
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching page ${url}:`, error.message);
-      return null;
+
+        const response = await axios.get(url, configOptions);
+        return response.data;
+      } catch (error) {
+        retries--;
+        console.error(`Error fetching page ${url} (${retries} retries left):`, error.message);
+        
+        if (retries > 0) {
+          console.log(`Retrying in ${config.scraper.retryDelay}ms...`);
+          await this.delay(config.scraper.retryDelay);
+        } else {
+          console.error(`Failed to fetch page ${url} after ${config.scraper.retryCount} retries`);
+          return null;
+        }
+      }
     }
   }
 
